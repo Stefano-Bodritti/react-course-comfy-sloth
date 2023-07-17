@@ -13,9 +13,37 @@ import {
 } from '../components'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import { FaAcquisitionsIncorporated } from 'react-icons/fa'
 
 const SingleProductPage = () => {
-  return <h4>single product page</h4>
+  const {id} = useParams();
+  const history = useHistory();
+  const {single_product_loading: loading, single_product_error: error, single_product: product, fetchSingleProduct} = useProductsContext();
+
+  useEffect(() => {
+    fetchSingleProduct(`${url}${id}`)
+  }, [id]);
+
+  useEffect(() => {
+    if (error) {
+      setTimeout(() => {
+        history.push('/');
+      }, 3000)
+    }
+  }, [error]);
+
+  if (loading) {
+    return <Loading />
+  }
+  if (error) {
+    return <Error/>
+  }
+
+  return (
+    <Wrapper>
+
+    </Wrapper>
+  )
 }
 
 const Wrapper = styled.main`
